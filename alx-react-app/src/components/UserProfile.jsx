@@ -1,17 +1,9 @@
 const UserProfile = (props) => {
     return (
-        <div style={{
-            border: "1px solid #ccc",
-            borderRadius: "8px",
-            padding: "16px",
-            maxWidth: "300px",
-            margin: "20px auto",
-            textAlign: "center",
-            backgroundColor: "#000000ff",
-        }}>
+        <div>
             <h2>{props.name}</h2>
             <p>Age: {props.age}</p>
-            <p>{props.bio}</p>
+            <p>Bio: {props.bio}</p>
         </div>
     );
 };
