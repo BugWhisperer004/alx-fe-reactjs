@@ -7,7 +7,7 @@ const UserProfile = (props) => {
             maxWidth: "300px",
             margin: "20px auto",
             textAlign: "center",
-            backgroundColor: "#f9f9f9",
+            backgroundColor: "#000000ff",
         }}>
             <h2>{props.name}</h2>
             <p>Age: {props.age}</p>
