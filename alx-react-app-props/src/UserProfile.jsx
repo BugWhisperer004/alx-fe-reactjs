@@ -1,6 +1,6 @@
 import UserInfo from './UserInfo';
 
-function ProfilePage({ userData }) {
+function UserProfile() {
     return <UserInfo />;
 }
 
