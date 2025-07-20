@@ -6,7 +6,7 @@ import UserContext from './components/UserContext';
 import UserProfile from './components/UserProfile';
 
 function App() {
-  const userData = { name: "Alice", email: "jane.doe@example.com" };
+  const userData = { name: "Alice", age: "20", bio: "Frontend student passionate about UI and design" };
   return (
     <>
       <WelcomeMessage />
