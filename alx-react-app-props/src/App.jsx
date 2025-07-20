@@ -12,7 +12,6 @@ function App() {
       <WelcomeMessage />
       <Header />
       <MainContent />
-      <UserProfile name="Alice" age="25" bio="Loves hiking and photography." />
       <Footer />
       <UserContext.Provider value={userData}>
         <UserProfile />
