@@ -1,40 +1,48 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import AddRecipeForm from './components/AddRecipeForm';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+
 import RecipeList from './components/RecipeList';
+import AddRecipe from './components/AddRecipe';
+import EditRecipe from './components/EditRecipe';
 import RecipeDetails from './components/RecipeDetails';
-import EditRecipeForm from './components/EditRecipeForm';
-import SearchBar from './components/SearchBar';
+import Favorites from './components/Favorites';
+import Recommendations from './components/Recommendations';
+
+import { useRecipeStore } from './components/recipeStore';
 
 const App = () => {
-  return (
-    <BrowserRouter>
-      <div style={{ padding: '2rem', maxWidth: '600px', margin: '0 auto' }}>
-        <h1>🍲 Recipe Sharing App</h1>
+  const generateRecommendations = useRecipeStore((state) => state.generateRecommendations);
 
-        <nav style={{ marginBottom: '1rem' }}>
-          <Link to="/">Home</Link>
+  return (
+    <Router>
+      <div style={{ padding: '20px' }}>
+        <nav style={{ marginBottom: '20px' }}>
+          <Link to="/" style={{ marginRight: '15px' }}>Home</Link>
+          <Link to="/add" style={{ marginRight: '15px' }}>Add Recipe</Link>
+          <Link to="/favorites" style={{ marginRight: '15px' }}>Favorites</Link>
+          <Link
+            to="/recommendations"
+            onClick={generateRecommendations}
+            style={{ marginRight: '15px' }}
+          >
+            Recommendations
+          </Link>
         </nav>
 
         <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <SearchBar />
-                <AddRecipeForm />
-                <hr />
-                <RecipeList />
-              </>
-            }
-          />
+          <Route path="/" element={<RecipeList />} />
+          <Route path="/add" element={<AddRecipe />} />
+          <Route path="/edit/:id" element={<EditRecipe />} />
           <Route path="/recipe/:id" element={<RecipeDetails />} />
-          <Route path="/edit/:id" element={<EditRecipeForm />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/recommendations" element={<Recommendations />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 };
 
 export default App;
+
 
 
