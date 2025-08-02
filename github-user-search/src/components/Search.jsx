@@ -1,5 +1,6 @@
+// src/components/Search.jsx
 import React, { useState } from 'react';
-import { searchGitHubUsers } from '../services/githubService';
+import { fetchUserData } from '../services/githubService';
 
 const Search = () => {
     const [username, setUsername] = useState('');
@@ -18,10 +19,10 @@ const Search = () => {
         setUsers([]);
 
         try {
-            const data = await searchGitHubUsers(username.trim(), location.trim(), minRepos.trim());
+            const data = await fetchUserData(username.trim(), location.trim(), parseInt(minRepos));
             setUsers(data);
         } catch (err) {
-            setError("Something went wrong. Try again.");
+            setError("Looks like we can't find any matching users.");
         } finally {
             setLoading(false);
         }
@@ -29,32 +30,29 @@ const Search = () => {
 
     return (
         <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <form onSubmit={handleSearch} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+            <form onSubmit={handleSearch}>
                 <input
                     type="text"
-                    placeholder="Username"
+                    placeholder="Search GitHub username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    style={{ padding: '0.5rem', width: '250px' }}
-                    required
+                    style={{ padding: '0.5rem', width: '200px', marginRight: '0.5rem' }}
                 />
                 <input
                     type="text"
-                    placeholder="Location (e.g., Kenya)"
+                    placeholder="Location (optional)"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
-                    style={{ padding: '0.5rem', width: '250px' }}
+                    style={{ padding: '0.5rem', width: '150px', marginRight: '0.5rem' }}
                 />
                 <input
                     type="number"
-                    placeholder="Minimum Repositories"
+                    placeholder="Min Repos"
                     value={minRepos}
                     onChange={(e) => setMinRepos(e.target.value)}
-                    style={{ padding: '0.5rem', width: '250px' }}
+                    style={{ padding: '0.5rem', width: '100px', marginRight: '0.5rem' }}
                 />
-                <button type="submit" style={{ padding: '0.5rem 1rem' }}>
-                    Advanced Search
-                </button>
+                <button type="submit" style={{ padding: '0.5rem 1rem' }}>Search</button>
             </form>
 
             {loading && <p>Loading...</p>}
@@ -74,6 +72,7 @@ const Search = () => {
 };
 
 export default Search;
+
 
 
 
