@@ -1,26 +1,30 @@
+// src/components/Search.jsx
 import React, { useState } from 'react';
-import { fetchUserData } from '../services/githubService';
+import { searchGitHubUsers } from '../services/githubService';
 
 const Search = () => {
-    const [username, setUsername] = useState('');
-    const [users, setUsers] = useState([]); // Changed from 'user' to 'users'
+    const [query, setQuery] = useState('');
+    const [location, setLocation] = useState('');
+    const [minRepos, setMinRepos] = useState('');
+    const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
     const handleSearch = async (e) => {
         e.preventDefault();
-        if (!username.trim()) return;
+        if (!query.trim()) return;
 
         setLoading(true);
         setError('');
-        setUsers([]); // Clear previous results
+        setUsers([]);
 
         try {
-            const data = await fetchUserData(username.trim());
-
-            // If GitHub API returns a single user object
-            // wrap it in an array to make it iterable
-            setUsers(Array.isArray(data) ? data : [data]);
+            const data = await searchGitHubUsers(query.trim(), location.trim(), minRepos.trim());
+            if (data.length === 0) {
+                setError("Looks like we can't find the user");
+            } else {
+                setUsers(data);
+            }
         } catch (err) {
             setError("Looks like we can't find the user");
         } finally {
@@ -34,11 +38,25 @@ const Search = () => {
                 <input
                     type="text"
                     placeholder="Search GitHub username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    style={{ padding: '0.5rem', width: '250px' }}
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    style={{ padding: '0.5rem', width: '200px', margin: '0.5rem' }}
                 />
-                <button type="submit" style={{ padding: '0.5rem 1rem', marginLeft: '1rem' }}>
+                <input
+                    type="text"
+                    placeholder="Location"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    style={{ padding: '0.5rem', width: '150px', margin: '0.5rem' }}
+                />
+                <input
+                    type="number"
+                    placeholder="Min Repos"
+                    value={minRepos}
+                    onChange={(e) => setMinRepos(e.target.value)}
+                    style={{ padding: '0.5rem', width: '150px', margin: '0.5rem' }}
+                />
+                <button type="submit" style={{ padding: '0.5rem 1rem', marginTop: '0.5rem' }}>
                     Search
                 </button>
             </form>
@@ -46,13 +64,11 @@ const Search = () => {
             {loading && <p>Loading...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
-            {/* Display user cards using .map() */}
             <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', marginTop: '2rem', gap: '1rem' }}>
                 {users.map((user) => (
                     <div key={user.id} style={{ border: '1px solid #ddd', padding: '1rem', borderRadius: '10px', width: '250px' }}>
                         <img src={user.avatar_url} alt={user.login} width="100" style={{ borderRadius: '50%' }} />
-                        <h3>{user.name || 'No name provided'}</h3>
-                        <p><strong>Username:</strong> {user.login}</p>
+                        <h3>{user.login}</h3>
                         <a href={user.html_url} target="_blank" rel="noopener noreferrer">View Profile</a>
                     </div>
                 ))}
@@ -62,3 +78,4 @@ const Search = () => {
 };
 
 export default Search;
+
