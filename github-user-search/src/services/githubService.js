@@ -1,11 +1,16 @@
 import axios from 'axios';
 
-export const searchGitHubUsers = async (query, location, minRepos) => {
-    let fullQuery = `${query}`;
-    if (location) fullQuery += `+location:${location}`;
-    if (minRepos) fullQuery += `+repos:>=${minRepos}`;
-
-    const endpoint = `https://api.github.com/search/users?q=${fullQuery}`;
+// Search for multiple users
+export const searchGitHubUsers = async (query) => {
+    const endpoint = `https://api.github.com/search/users?q=${query}`;
     const response = await axios.get(endpoint);
     return response.data.items;
 };
+
+// (Optional: Keep single user fetch)
+export const fetchUserData = async (username) => {
+    const endpoint = `https://api.github.com/users/${username}`;
+    const response = await axios.get(endpoint);
+    return response.data;
+};
+

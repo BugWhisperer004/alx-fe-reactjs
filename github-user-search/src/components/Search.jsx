@@ -1,32 +1,25 @@
-// src/components/Search.jsx
 import React, { useState } from 'react';
 import { searchGitHubUsers } from '../services/githubService';
 
 const Search = () => {
-    const [query, setQuery] = useState('');
-    const [location, setLocation] = useState('');
-    const [minRepos, setMinRepos] = useState('');
+    const [username, setUsername] = useState('');
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
     const handleSearch = async (e) => {
         e.preventDefault();
-        if (!query.trim()) return;
+        if (!username.trim()) return;
 
         setLoading(true);
         setError('');
         setUsers([]);
 
         try {
-            const data = await searchGitHubUsers(query.trim(), location.trim(), minRepos.trim());
-            if (data.length === 0) {
-                setError("Looks like we can't find the user");
-            } else {
-                setUsers(data);
-            }
+            const data = await searchGitHubUsers(username.trim());
+            setUsers(data);
         } catch (err) {
-            setError("Looks like we can't find the user");
+            setError("Something went wrong. Try again.");
         } finally {
             setLoading(false);
         }
@@ -37,26 +30,12 @@ const Search = () => {
             <form onSubmit={handleSearch}>
                 <input
                     type="text"
-                    placeholder="Search GitHub username"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    style={{ padding: '0.5rem', width: '200px', margin: '0.5rem' }}
+                    placeholder="Search GitHub users"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    style={{ padding: '0.5rem', width: '250px' }}
                 />
-                <input
-                    type="text"
-                    placeholder="Location"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    style={{ padding: '0.5rem', width: '150px', margin: '0.5rem' }}
-                />
-                <input
-                    type="number"
-                    placeholder="Min Repos"
-                    value={minRepos}
-                    onChange={(e) => setMinRepos(e.target.value)}
-                    style={{ padding: '0.5rem', width: '150px', margin: '0.5rem' }}
-                />
-                <button type="submit" style={{ padding: '0.5rem 1rem', marginTop: '0.5rem' }}>
+                <button type="submit" style={{ padding: '0.5rem 1rem', marginLeft: '1rem' }}>
                     Search
                 </button>
             </form>
@@ -78,4 +57,6 @@ const Search = () => {
 };
 
 export default Search;
+
+
 
