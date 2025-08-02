@@ -3,6 +3,8 @@ import { searchGitHubUsers } from '../services/githubService';
 
 const Search = () => {
     const [username, setUsername] = useState('');
+    const [location, setLocation] = useState('');
+    const [minRepos, setMinRepos] = useState('');
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -16,7 +18,7 @@ const Search = () => {
         setUsers([]);
 
         try {
-            const data = await searchGitHubUsers(username.trim());
+            const data = await searchGitHubUsers(username.trim(), location.trim(), minRepos.trim());
             setUsers(data);
         } catch (err) {
             setError("Something went wrong. Try again.");
@@ -27,16 +29,31 @@ const Search = () => {
 
     return (
         <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <form onSubmit={handleSearch}>
+            <form onSubmit={handleSearch} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
                 <input
                     type="text"
-                    placeholder="Search GitHub users"
+                    placeholder="Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     style={{ padding: '0.5rem', width: '250px' }}
+                    required
                 />
-                <button type="submit" style={{ padding: '0.5rem 1rem', marginLeft: '1rem' }}>
-                    Search
+                <input
+                    type="text"
+                    placeholder="Location (e.g., Kenya)"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    style={{ padding: '0.5rem', width: '250px' }}
+                />
+                <input
+                    type="number"
+                    placeholder="Minimum Repositories"
+                    value={minRepos}
+                    onChange={(e) => setMinRepos(e.target.value)}
+                    style={{ padding: '0.5rem', width: '250px' }}
+                />
+                <button type="submit" style={{ padding: '0.5rem 1rem' }}>
+                    Advanced Search
                 </button>
             </form>
 
