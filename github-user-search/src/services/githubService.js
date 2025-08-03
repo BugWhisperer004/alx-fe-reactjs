@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
+const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 
 export const fetchUserData = async (username, location = '', minRepos = 0) => {
     let query = `https://api.github.com/search/users?q=${username}`;
