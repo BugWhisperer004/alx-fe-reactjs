@@ -1,20 +1,68 @@
 [
     {
         "id": 1,
-        "title": "Spaghetti Carbonara",
-        "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
-        "image": "https://via.placeholder.com/300x200"
+        "title": "Pasta Bolognese",
+        "image": "https://source.unsplash.com/400x300/?pasta,bolognese",
+        "ingredients": [
+            "200g spaghetti",
+            "100g minced beef",
+            "1 onion, chopped",
+            "2 cloves garlic, minced",
+            "400g canned tomatoes",
+            "2 tbsp olive oil",
+            "Salt and pepper to taste"
+        ],
+        "instructions": [
+            "Boil spaghetti until al dente.",
+            "Heat olive oil, sauté onion and garlic until golden.",
+            "Add minced beef and cook until browned.",
+            "Pour in canned tomatoes, simmer for 15 minutes.",
+            "Season with salt and pepper.",
+            "Serve sauce over spaghetti."
+        ]
     },
     {
         "id": 2,
-        "title": "Chicken Tikka Masala",
-        "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
-        "image": "https://via.placeholder.com/300x200"
+        "title": "Chicken Sandwich",
+        "image": "https://source.unsplash.com/400x300/?chicken,sandwich",
+        "ingredients": [
+            "2 slices bread",
+            "150g grilled chicken breast",
+            "1 tomato, sliced",
+            "Lettuce leaves",
+            "Mayonnaise",
+            "Salt and pepper to taste"
+        ],
+        "instructions": [
+            "Toast bread slices lightly.",
+            "Spread mayonnaise on one side of each slice.",
+            "Layer lettuce, tomato, and grilled chicken on bread.",
+            "Season with salt and pepper.",
+            "Close sandwich with the second slice and serve."
+        ]
     },
     {
         "id": 3,
-        "title": "Avocado Toast",
-        "summary": "Toasted bread topped with smashed avocado, olive oil, and chili flakes.",
-        "image": "https://via.placeholder.com/300x200"
+        "title": "Goulash",
+        "image": "https://source.unsplash.com/400x300/?goulash,stew",
+        "ingredients": [
+            "500g beef cubes",
+            "2 onions, chopped",
+            "2 tbsp paprika",
+            "2 cloves garlic, minced",
+            "2 carrots, sliced",
+            "2 potatoes, diced",
+            "500ml beef broth",
+            "2 tbsp vegetable oil",
+            "Salt and pepper to taste"
+        ],
+        "instructions": [
+            "Heat oil in a pot, sauté onions and garlic.",
+            "Add beef cubes and brown on all sides.",
+            "Stir in paprika, carrots, and potatoes.",
+            "Pour in beef broth and bring to boil.",
+            "Simmer on low heat for 1.5 hours until tender.",
+            "Season with salt and pepper before serving."
+        ]
     }
 ]
