@@ -1,45 +1,38 @@
 import { useQuery } from "@tanstack/react-query";
 
-const fetchPosts = async () => {
-    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-    if (!response.ok) {
-        throw new Error("Network response was not ok");
-    }
-    return response.json();
-};
-
 export default function PostsComponent() {
-    const {
-        data,
-        isLoading,
-        isError,
-        error,
-        isFetching,
-        refetch,
-        dataUpdatedAt,
-    } = useQuery({
+    const { data, isLoading, isError, error } = useQuery({
         queryKey: ["posts"],
-        queryFn: fetchPosts,
+        queryFn: async () => {
+            const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+            if (!res.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return res.json();
+        },
+        // Required caching options
+        cacheTime: 1000 * 60 * 5, // keep data in cache for 5 minutes
+        staleTime: 1000 * 30, // data considered fresh for 30 seconds
+        refetchOnWindowFocus: true, // refetch when window regains focus
+        keepPreviousData: true, // keep old data while fetching new
     });
 
-    if (isLoading) return <div>Loading...</div>;
-    if (isError) return <div>Error: {error.message}</div>;
+    if (isLoading) return <p>Loading posts...</p>;
+    if (isError) return <p>Error: {error.message}</p>;
 
     return (
         <div>
-            <h1>Posts</h1>
-            <button onClick={() => refetch()}>Refetch</button>
-            <p>
-                Last Updated:{" "}
-                {dataUpdatedAt ? new Date(dataUpdatedAt).toLocaleString() : "Never"}
-            </p>
-            {isFetching && <p>Fetching...</p>}
-            <ul>
+            <h2 className="text-xl font-bold mb-4">Posts</h2>
+            <ul className="space-y-2">
                 {data.map((post) => (
-                    <li key={post.id}>{post.title}</li>
+                    <li key={post.id} className="p-2 border rounded">
+                        <h3 className="font-semibold">{post.title}</h3>
+                        <p>{post.body}</p>
+                    </li>
                 ))}
             </ul>
         </div>
     );
 }
+
 
