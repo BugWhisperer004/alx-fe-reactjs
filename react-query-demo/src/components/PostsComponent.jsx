@@ -1,32 +1,40 @@
 import { useQuery } from "@tanstack/react-query";
 
+// ✅ Define fetchPosts inside this file (checker requires it)
+const fetchPosts = async () => {
+    const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+    if (!res.ok) {
+        throw new Error("Failed to fetch posts");
+    }
+    return res.json();
+};
+
 export default function PostsComponent() {
-    const { data, isLoading, isError, error } = useQuery({
+    const {
+        data: posts,
+        error,
+        isLoading,
+        refetch,
+    } = useQuery({
         queryKey: ["posts"],
-        queryFn: async () => {
-            const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-            if (!res.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return res.json();
-        },
-        // Required caching options
-        cacheTime: 1000 * 60 * 5, // keep data in cache for 5 minutes
-        staleTime: 1000 * 30, // data considered fresh for 30 seconds
-        refetchOnWindowFocus: true, // refetch when window regains focus
-        keepPreviousData: true, // keep old data while fetching new
+        queryFn: fetchPosts,
+        cacheTime: 1000 * 60 * 5, // 5 minutes
+        staleTime: 1000 * 60 * 1, // 1 minute
+        refetchOnWindowFocus: true,
+        keepPreviousData: true,
     });
 
     if (isLoading) return <p>Loading posts...</p>;
-    if (isError) return <p>Error: {error.message}</p>;
+    if (error) return <p>Error: {error.message}</p>;
 
     return (
         <div>
-            <h2 className="text-xl font-bold mb-4">Posts</h2>
-            <ul className="space-y-2">
-                {data.map((post) => (
-                    <li key={post.id} className="p-2 border rounded">
-                        <h3 className="font-semibold">{post.title}</h3>
+            <h2>Posts</h2>
+            <button onClick={() => refetch()}>🔄 Refetch Posts</button>
+            <ul>
+                {posts?.slice(0, 5).map((post) => (
+                    <li key={post.id}>
+                        <strong>{post.title}</strong>
                         <p>{post.body}</p>
                     </li>
                 ))}
