@@ -1,18 +1,19 @@
+// src/App.jsx
 import React, { Suspense } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import ProtectedRoute from './auth/ProtectedRoute';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Profile from './pages/Profile';
-import ProfileDetails from './pages/ProfileDetails';
-import ProfileSettings from './pages/ProfileSettings';
-import Posts from './pages/Posts';
-import Post from './pages/Post';
-import NotFound from './pages/NotFound';
+import Home from './components/Home';
+import Login from './components/Login';
+import Profile from './components/Profile';
+import ProfileDetails from './components/ProfileDetails';
+import ProfileSettings from './components/ProfileSettings';
+import Posts from './components/Posts';
+import Post from './components/Post';
+import NotFound from './components/NotFound';
 
 export default function App() {
   return (
-    <div>
+    <BrowserRouter>
       <header style={{ padding: 12, borderBottom: '1px solid #eee' }}>
         <nav style={{ display: 'flex', gap: 12 }}>
           <Link to="/">Home</Link>
@@ -27,16 +28,15 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
 
-            {/* Protected routes wrapper */}
+            {/* Protected */}
             <Route element={<ProtectedRoute />}>
-              {/* /profile is protected; it has nested child routes */}
               <Route path="/profile" element={<Profile />}>
                 <Route index element={<ProfileDetails />} />
                 <Route path="settings" element={<ProfileSettings />} />
               </Route>
             </Route>
 
-            {/* Dynamic route for posts */}
+            {/* Dynamic */}
             <Route path="/posts" element={<Posts />} />
             <Route path="/posts/:postId" element={<Post />} />
 
@@ -44,6 +44,7 @@ export default function App() {
           </Routes>
         </Suspense>
       </main>
-    </div>
+    </BrowserRouter>
   );
 }
+
