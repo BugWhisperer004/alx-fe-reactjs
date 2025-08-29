@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import ProtectedRoute from './auth/ProtectedRoute';
@@ -47,4 +46,3 @@ export default function App() {
     </BrowserRouter>
   );
 }
-
