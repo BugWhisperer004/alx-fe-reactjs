@@ -8,6 +8,7 @@ import ProfileDetails from './components/ProfileDetails';
 import ProfileSettings from './components/ProfileSettings';
 import Posts from './components/Posts';
 import Post from './components/Post';
+import BlogPost from './components/BlogPost';   // 👈 NEW
 import NotFound from './components/NotFound';
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
           <Link to="/">Home</Link>
           <Link to="/posts">Posts</Link>
           <Link to="/profile">Profile</Link>
+          <Link to="/blog/1">Blog Example</Link> {/* 👈 optional quick link */}
         </nav>
       </header>
 
@@ -38,6 +40,7 @@ export default function App() {
             {/* Dynamic */}
             <Route path="/posts" element={<Posts />} />
             <Route path="/posts/:postId" element={<Post />} />
+            <Route path="/blog/:id" element={<BlogPost />} /> {/* 👈 NEW */}
 
             <Route path="*" element={<NotFound />} />
           </Routes>
@@ -46,3 +49,4 @@ export default function App() {
     </BrowserRouter>
   );
 }
+
